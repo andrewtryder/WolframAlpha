@@ -24,4 +24,4 @@ class WolframAlpha(callbacks.Plugin):
 Class = WolframAlpha
 
 
-# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
+# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=250:
