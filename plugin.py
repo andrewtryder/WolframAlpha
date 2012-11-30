@@ -32,15 +32,15 @@ class WolframAlpha(callbacks.Plugin):
     
     # http://products.wolframalpha.com/api/documentation.html
     def wolframalpha(self, irc, msg, args, optlist, optinput):
-        """[--options] <input>
-        --lines number
-        --reinterpret
-        --usemetric
-        --shortest
-        --fulloutput
+        """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>
         
-        Returns answer from Wolfram Alpha API based on input.
-        Ex: freezing point of water at 20,000ft
+        Returns answer from Wolfram Alpha API based on input. Ex: freezing point of water at 20,000ft
+        
+        Use --num number to display a specific amount of lines.
+        Use --reinterpret to have WA logic to interpret question if not understood.
+        Use --usemetric to not display in imperial units. 
+        Use --shortest for the shortest output (ignores lines).
+        Use --fulloutput to display everything from the API (can flood).
         """
         
         # check for API key before we can do anything.
@@ -55,7 +55,6 @@ class WolframAlpha(callbacks.Plugin):
         # check for config variables to manipulate URL arguments.
         if not self.registryValue('useImperial'):
             urlArgs['units'] = 'metric'
-
         if self.registryValue('reinterpretInput'):
             urlArgs['reinterpret'] = 'true' 
         
@@ -69,7 +68,7 @@ class WolframAlpha(callbacks.Plugin):
                     args['shortest'] = True
                 if key == 'fulloutput':
                     args['fulloutput'] = True
-                if key == 'lines':
+                if key == 'num':
                     args['maxoutput'] = value
                 if key == 'usemetric':
                     urlArgs['units'] = 'metric'
@@ -78,7 +77,7 @@ class WolframAlpha(callbacks.Plugin):
                 
         # build url.
         url = 'http://api.wolframalpha.com/v2/query?' + urllib.urlencode(urlArgs)
-        # self.log.info(url)
+        self.log.info(url)
                     
         # try and query.                        
         try: 
@@ -98,7 +97,6 @@ class WolframAlpha(callbacks.Plugin):
             
         # check if we have an error. reports to irc but more detailed in the logs.
         if document.attrib['success'] == 'false' and document.attrib['error'] == 'true':
-            
             errormsgs = []  
             for error in document.findall('.//error'):
                 errorcode = error.find('code').text
@@ -109,7 +107,6 @@ class WolframAlpha(callbacks.Plugin):
             irc.reply("Something went wrong processing request for: {0} ERROR: {1}".format(optinput, errormsgs))
             return
         elif document.attrib['success'] == 'false' and document.attrib['error'] == 'false': # no success but no error.
-            
             errormsgs = []
             for error in document.findall('.//futuretopic'):
                 errormsg = error.attrib['msg']
@@ -142,7 +139,7 @@ class WolframAlpha(callbacks.Plugin):
         else:
             if args['shortest']: # just show the question and answer.
                     # possible_questions = ('Input interpretation', 'Input')
-                    # possible_answers = 'Current result', 'Response', 'Result', 'Results', 'Solution', 'Derivative', "Exact result", "Decimal approximation"
+                    # possible_answers = 'Current result', 'Response', 'Result', 'Results', 'Solution', 'Derivative', "Exact result", "Decimal approximation", 'Value'
                 irc.reply("{0} :: {1}".format(string.join([item for item in output.get('Input interpretation', None)]), string.join([item for item in output.get('Result', None)])))
             elif args['fulloutput']: # show everything. no limits.
                 for i,each in output.iteritems():
@@ -152,12 +149,11 @@ class WolframAlpha(callbacks.Plugin):
                     if q < args['maxoutput']:
                         irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
                     
-    wolframalpha = wrap(wolframalpha, [getopts({'lines':'int',
+    wolframalpha = wrap(wolframalpha, [getopts({'num':'int',
                                                 'reinterpret':'',
                                                 'usemetric':'',
                                                 'shortest':'',
-                                                'fulloutput':''
-                                                            }), 'text'])
+                                                'fulloutput':''}), 'text'])
 
 
 Class = WolframAlpha
