@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 ###
 # Copyright (c) 2012, spline
 # All rights reserved.
@@ -5,10 +6,10 @@
 #
 ###
 
-# my libs
 import urllib2
 import urllib
 import string
+import unicodedata
 try:
     import xml.etree.cElementTree as ElementTree
 except ImportError:
@@ -30,6 +31,13 @@ class WolframAlpha(callbacks.Plugin):
     This should describe *how* to use this plugin."""
     threaded = True
     
+    #def _reencode(self, input_string, decoder = 'utf-8', encoder = 'utf=8'):   
+    #    try:
+    #        output_string = unicodedata.normalize('NFD', input_string.decode(decoder)).encode(encoder)
+    #    except UnicodeError:
+    #        output_string = unicodedata.normalize('NFD', input_string.decode('ascii', 'replace')).encode(encoder)
+    #    return output_string
+    
     # http://products.wolframalpha.com/api/documentation.html
     def wolframalpha(self, irc, msg, args, optlist, optinput):
         """[--options] <input>
@@ -44,35 +52,33 @@ class WolframAlpha(callbacks.Plugin):
             return
         
         # first, url arguments, some of which getopts and config variables can manipulate.
-        urlArgs = { 'input': optinput,
-                    'appid': apiKey,
-                    'reinterpret': 'false',
-                    'format':'plaintext',
-                    'podindex':'1,2,3',
-                    'units':'nonmetric'
-                  }
-                          
-        #maxoutput = self.registryValue('maxOutput')
-        maxoutput = 10
-        # units = self.registryValue('units')
+        urlArgs = { 'input':optinput, 'appid':apiKey, 'reinterpret':'false', 'format':'plaintext', 'units':'nonmetric' }
+        
+        # args we use internally to control output.                          
+        args = { 'maxoutput': self.registryValue('maxOutput'), 'shortest':None, 'fulloutput':None }
         
         # handle getopts.
         if optlist:
             for (key, value) in optlist:
-                if key == 'version':
-                    if value.lower() not in validVersions:
-                        irc.reply("Invalid version. Version must be one of: {0}".format(validVersions.keys()))
-                        return
-                    else:
-                        version = value.lower()
-
+                if key == 'shortest':
+                    args['shortest'] = True
+                if key == 'fulloutput':
+                    args['fulloutput'] = True
+                if key == 'lines':
+                    args['maxoutput'] == value
+                if key == 'usemetric':
+                    urlArgs['units'] = 'metric'
+                if key == 'reinterpret':
+                    urlArgs['reinterpret'] = 'true'
+                
         # build url.
         url = 'http://api.wolframalpha.com/v2/query?' + urllib.urlencode(urlArgs)
         self.log.info(url)
                     
         # try and query.                        
         try: 
-            request = urllib2.Request(url, headers={"Accept" : "application/xml"})
+            #request = urllib2.Request(url, headers={"Accept" : "application/xml"})
+            request = urllib2.Request(url)
             u = urllib2.urlopen(request)
         except:
             irc.reply("Failed to load url: %s" % url)
@@ -96,33 +102,39 @@ class WolframAlpha(callbacks.Plugin):
         #   <futuretopic topic='Operating Systems'
         # msg='Development of this topic is under investigation...' />
         
-        #retrieving every tag with label 'plaintext'
-        #for e in tree.findall('pod'):
-	    #        for item in [ef for ef in list(e) if ef.tag=='subpod']:
-	    #            for it in [i for i in list(item) if i.tag=='plaintext']:
-	    #                if it.tag=='plaintext':
-	    #                    data_dics[e.get('title')] = it.text
-        
 
-        # Input interpretation and Result are pod titles.
+        # possible_questions = ('Input interpretation', 'Input')
+        # possible_answers = ('Current result', 'Response', 'Result', 'Results')
+        # title == 'Solution' or title == 'Derivative':  title == "Exact result" or title == "Decimal approximation"):
 
         # now process the output. We put everything in a dict to process easier later on.
         output = {}
-
         for pod in document.findall('.//pod'):
-            title = pod.attrib['title']
+            title = pod.attrib['title'].encode('utf-8')
             for plaintext in pod.findall('.//plaintext'):
                 if plaintext.text:
-                    output[title] = plaintext.text.encode('utf-8').replace('\n',' ')
-                    
+                    appendtext = plaintext.text.encode('ascii', 'ignore').replace('\n',' ')
+                    output.setdefault(title, []).append(appendtext) 
+
         if len(output) < 1:
             irc.reply("Something went wrong looking up: {0}".format(optinput))
             return
         else:
-            for i,each in output.iteritems():
-                irc.reply("{0} | {1}".format(i, each))
-    
+            if args['shortest']: # just show the question and answer. 
+                irc.reply("{0} :: {1}".format(string.join([item for item in output.get('Input interpretation', None)]), string.join([item for item in output.get('Result', None)])))
+            elif args['fulloutput']: # show everything. no limits.
+                for i,each in output.iteritems():
+                    irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
+            else:
+                for q, (i,each) in enumerate(output.iteritems()):
+                    if q < args['maxoutput']:
+                        irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
+                    
     wolframalpha = wrap(wolframalpha, [getopts({'lines':'int',
+                                                'reinterpret':'',
+                                                'usemetric':'',
+                                                'shortest':'',
+                                                'fulloutput':''
                                                             }), 'text'])
 
 
