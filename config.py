@@ -22,7 +22,8 @@ def configure(advanced):
 
 WolframAlpha = conf.registerPlugin('WolframAlpha')
 conf.registerGlobalValue(WolframAlpha, 'apiKey', registry.String('', ("""Your Wolfram Alpha API key."""), private=True))
-conf.registerGlobalValue(WolframAlpha, 'maxOutput', registry.Integer(3, ("""How many lines by default to output.""")))
-
+conf.registerGlobalValue(WolframAlpha, 'maxOutput', registry.Integer(4, ("""How many lines by default to output.""")))
+conf.registerGlobalValue(WolframAlpha, 'useImperial', registry.Boolean(True, ("""Use imperial units? Defaults to yes.""")))
+conf.registerGlobalValue(WolframAlpha, 'reinterpretInput', registry.Boolean(False, ("""Reinterpret input string if WA API cannot understand. Best to leave false.""")))
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=250:
