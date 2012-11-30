@@ -89,44 +89,65 @@ class WolframAlpha(callbacks.Plugin):
             return
 
         # now try to process XML.
-        tree = ElementTree.parse(u)
-        document = tree.getroot()
-
+        try:
+            tree = ElementTree.parse(u)
+            document = tree.getroot()
+        except:
+            irc.reply("Something broke processing the XML.")
+            return
+            
         # check if we have an error. reports to irc but more detailed in the logs.
-        if document.attrib['success'] == 'false' or document.attrib['error'] == 'true':
-            errormsgs = []  # handle error messages if there is one.
+        if document.attrib['success'] == 'false' and document.attrib['error'] == 'true':
+            
+            errormsgs = []  
             for error in document.findall('.//error'):
                 errorcode = error.find('code').text
                 errormsg = error.find('msg').text
                 errormsgs.append("{0} - {1}".format(errorcode, errormsg))
             
-            self.log.debug("ERROR processing request for: {0}".format(optinput, errormsgs))
+            self.log.debug("ERROR processing request for: {0} message: {1}".format(optinput, errormsgs))
             irc.reply("Something went wrong processing request for: {0} ERROR: {1}".format(optinput, errormsgs))
             return
-        
-        # possible_questions = ('Input interpretation', 'Input')
-        # possible_answers = ('Current result', 'Response', 'Result', 'Results')
-        # title == 'Solution' or title == 'Derivative':  title == "Exact result" or title == "Decimal approximation"):
+        elif document.attrib['success'] == 'false' and document.attrib['error'] == 'false': # no success but no error.
+            
+            errormsgs = []
+            for error in document.findall('.//futuretopic'):
+                errormsg = error.attrib['msg']
+                errormsgs.append("FUTURE TOPIC: {0}".format(errormsg))
 
-        # now process the output. We put everything in a dict to process easier later on.
-        output = {}
-        for pod in document.findall('.//pod'):
-            title = pod.attrib['title'].encode('utf-8')
-            for plaintext in pod.findall('.//plaintext'):
-                if plaintext.text:
-                    appendtext = plaintext.text.encode('ascii', 'ignore').replace('\n',' ')
-                    output.setdefault(title, []).append(appendtext) 
+            for error in document.findall('.//didyoumeans'):
+                errormsg = error.find('didyoumean').text
+                errormsgs.append("Did you mean? {0}".format(errormsg))
+            
+            for error in document.findall('.//tips'):
+                errormsg = error.find('tip').attrib['text'].text
+                errormsgs.append("TIPS: {0}".format(errormsg))
 
+            self.log.debug("ERROR with input: {0} API returned: {1}".format(optinput, errormsgs))
+            irc.reply("ERROR with input: {0} API returned: {1}".format(optinput, errormsgs))
+            return
+        else: # this means we have success and no error messages.
+            output = {}
+            for pod in document.findall('.//pod'):
+                title = pod.attrib['title'].encode('utf-8')
+                for plaintext in pod.findall('.//plaintext'):
+                    if plaintext.text:
+                        appendtext = plaintext.text.encode('ascii', 'ignore').replace('\n',' ')
+                        output.setdefault(title, []).append(appendtext) 
+
+        # done processing the XML so lets work on the output.
         if len(output) < 1:
             irc.reply("Something went wrong looking up: {0}".format(optinput))
             return
         else:
-            if args['shortest']: # just show the question and answer. 
+            if args['shortest']: # just show the question and answer.
+                    # possible_questions = ('Input interpretation', 'Input')
+                    # possible_answers = 'Current result', 'Response', 'Result', 'Results', 'Solution', 'Derivative', "Exact result", "Decimal approximation"
                 irc.reply("{0} :: {1}".format(string.join([item for item in output.get('Input interpretation', None)]), string.join([item for item in output.get('Result', None)])))
             elif args['fulloutput']: # show everything. no limits.
                 for i,each in output.iteritems():
                     irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
-            else:
+            else: # regular output, dictated by --lines or maxoutput.
                 for q, (i,each) in enumerate(output.iteritems()):
                     if q < args['maxoutput']:
                         irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
