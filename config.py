@@ -22,7 +22,7 @@ def configure(advanced):
 
 WolframAlpha = conf.registerPlugin('WolframAlpha')
 conf.registerGlobalValue(WolframAlpha, 'apiKey', registry.String('', ("""Your Wolfram Alpha API key."""), private=True))
-
+conf.registerGlobalValue(WolframAlpha, 'maxOutput', registry.Integer(3, ("""How many lines by default to output.""")))
 
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=250:
