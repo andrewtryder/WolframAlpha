@@ -133,7 +133,7 @@ class WolframAlpha(callbacks.Plugin):
             
             for pod in document.findall('.//pod'):
                 title = pod.attrib['title'].encode('utf-8')
-                position = pod.attrib['position'].encode('utf-8')
+                position = int(pod.attrib['position']) # store as int to sort.
                 outputlist[position] = title
                 for plaintext in pod.findall('.//plaintext'):
                     if plaintext.text:
@@ -145,10 +145,10 @@ class WolframAlpha(callbacks.Plugin):
             return
         else: # rarely, output doesn't have things. validated so now output.
             if args['shortest']: # just show the question and answer.
-                # outputlist has pod titles, sort, get the first and second title, string, fetch key.
-                # not every input has a clear Input/Result (question/answer).
-                question = output.get(str("".join(sorted(outputlist.values())[0])), None)
-                answer = output.get(str("".join(sorted(outputlist.values())[1])), None)
+                # outputlist has pod titles, ordered by importance, not every input has a clear Input/Result (question/answer).
+                outputlist = [outputlist[item] for item in sorted(outputlist.keys())] #  listcomp: sort by keys, fetch value, restore    
+                question = output.get(outputlist[0], None)
+                answer = output.get(outputlist[1], None)
 
                 if question is not None and answer is not None:
                     if self.registryValue('disableANSI'):
