@@ -6,9 +6,11 @@
 #
 ###
 
+# my libs
 import urllib2
 import urllib
 import string
+from collections import defaultdict # we use defaultdict vs. OrderedDict for compatability. Requires some workarounds.
 try:
     import xml.etree.cElementTree as ElementTree
 except ImportError:
@@ -34,7 +36,7 @@ class WolframAlpha(callbacks.Plugin):
     def wolframalpha(self, irc, msg, args, optlist, optinput):
         """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>
         
-        Returns answer from Wolfram Alpha API based on input. Ex: freezing point of water at 20,000ft
+        Returns answer from Wolfram Alpha API based on input.
         
         Use --num number to display a specific amount of lines.
         Use --reinterpret to have WA logic to interpret question if not understood.
@@ -124,30 +126,44 @@ class WolframAlpha(callbacks.Plugin):
             irc.reply("ERROR with input: {0} API returned: {1}".format(optinput, errormsgs))
             return
         else: # this means we have success and no error messages.
-            output = {}
+            # each pod has a title, position and a number of subtexts. output contains the plaintext.
+            # outputlist is used in sorting since defaultdict does not remember order/position.
+            output = defaultdict(list)
+            outputlist = {}
+            
             for pod in document.findall('.//pod'):
                 title = pod.attrib['title'].encode('utf-8')
+                position = pod.attrib['position'].encode('utf-8')
+                outputlist[position] = title
                 for plaintext in pod.findall('.//plaintext'):
                     if plaintext.text:
-                        appendtext = plaintext.text.encode('ascii', 'ignore').replace('\n',' ')
-                        output.setdefault(title, []).append(appendtext) 
-
+                        output[title].append(plaintext.text.encode('utf-8').replace('\n',' '))
+        
         # done processing the XML so lets work on the output.
         if len(output) < 1:
             irc.reply("Something went wrong looking up: {0}".format(optinput))
             return
-        else:
+        else: # rarely, output doesn't have things. validated so now output.
             if args['shortest']: # just show the question and answer.
-                    # possible_questions = ('Input interpretation', 'Input')
-                    # possible_answers = 'Current result', 'Response', 'Result', 'Results', 'Solution', 'Derivative', "Exact result", "Decimal approximation", 'Value'
-                irc.reply("{0} :: {1}".format(string.join([item for item in output.get('Input interpretation', None)]), string.join([item for item in output.get('Result', None)])))
+                # outputlist has pod titles, sort, get the first and second title, string, fetch key.
+                # other approach would be to use the keys above, which can be unreliable. Not every q/a has a set podtitle.
+                question = output.get(str("".join(sorted(outputlist.values())[0])), None)
+                answer = output.get(str("".join(sorted(outputlist.values())[1])), None)
+
+                irc.reply("{0} :: {1}".format(string.join([item for item in question]), string.join([item for item in answer])))
+                
             elif args['fulloutput']: # show everything. no limits.
-                for i,each in output.iteritems():
-                    irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
+                for k, v in sorted(outputlist.items()): # grab all values, sorted via the position number. output one per line.
+                    itemout = "".join(output.get(v, None)) # output contains lists, so we need to join prior to going out.
+                    if itemout is not None or len(itemout) > 0:
+                        irc.reply("{0} :: {1}".format(v, itemout))
+                        
             else: # regular output, dictated by --lines or maxoutput.
-                for q, (i,each) in enumerate(output.iteritems()):
+                for q, k in enumerate(sorted(outputlist.keys())):
                     if q < args['maxoutput']:
-                        irc.reply("{0} :: {1}".format(i, string.join([item for item in each], " | ")))
+                        itemout = "".join(output.get(outputlist[k], None)) # have the key, get the value, use for output.
+                        if itemout is not None or len(itemout) > 0:
+                            irc.reply("{0} :: {1}".format(outputlist[k], itemout))
                     
     wolframalpha = wrap(wolframalpha, [getopts({'num':'int',
                                                 'reinterpret':'',

@@ -25,5 +25,6 @@ conf.registerGlobalValue(WolframAlpha, 'apiKey', registry.String('', ("""Your Wo
 conf.registerGlobalValue(WolframAlpha, 'maxOutput', registry.Integer(4, ("""How many lines by default to output.""")))
 conf.registerGlobalValue(WolframAlpha, 'useImperial', registry.Boolean(True, ("""Use imperial units? Defaults to yes.""")))
 conf.registerGlobalValue(WolframAlpha, 'reinterpretInput', registry.Boolean(False, ("""Reinterpret input string if WA API cannot understand. Best to leave false.""")))
+conf.registerGlobalValue(WolframAlpha, 'disableANSI', registry.Boolean(False, """Do not display any ANSI (color/bold) for channel."""))
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=250:
