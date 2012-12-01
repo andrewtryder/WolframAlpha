@@ -154,16 +154,16 @@ class WolframAlpha(callbacks.Plugin):
                 
             elif args['fulloutput']: # show everything. no limits.
                 for k, v in sorted(outputlist.items()): # grab all values, sorted via the position number. output one per line.
-                    itemout = "".join(output.get(v, None)) # output contains lists, so we need to join prior to going out.
-                    if itemout is not None or len(itemout) > 0:
-                        irc.reply("{0} :: {1}".format(v, itemout))
+                    itemout = output.get(v, None) # output contains lists, so we need to join prior to going out.
+                    if itemout and itemout is not None:
+                        irc.reply("{0} :: {1}".format(v, "".join(itemout)))
                         
             else: # regular output, dictated by --lines or maxoutput.
                 for q, k in enumerate(sorted(outputlist.keys())):
                     if q < args['maxoutput']:
-                        itemout = "".join(output.get(outputlist[k], None)) # have the key, get the value, use for output.
-                        if itemout is not None or len(itemout) > 0:
-                            irc.reply("{0} :: {1}".format(outputlist[k], itemout))
+                        itemout = output.get(outputlist[k], None) # have the key, get the value, use for output.
+                        if itemout and itemout is not None:
+                            irc.reply("{0} :: {1}".format(outputlist[k], "".join(itemout)))
                     
     wolframalpha = wrap(wolframalpha, [getopts({'num':'int',
                                                 'reinterpret':'',
