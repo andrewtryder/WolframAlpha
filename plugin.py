@@ -146,25 +146,37 @@ class WolframAlpha(callbacks.Plugin):
         else: # rarely, output doesn't have things. validated so now output.
             if args['shortest']: # just show the question and answer.
                 # outputlist has pod titles, sort, get the first and second title, string, fetch key.
-                # other approach would be to use the keys above, which can be unreliable. Not every q/a has a set podtitle.
+                # not every input has a clear Input/Result (question/answer).
                 question = output.get(str("".join(sorted(outputlist.values())[0])), None)
                 answer = output.get(str("".join(sorted(outputlist.values())[1])), None)
 
-                irc.reply("{0} :: {1}".format(string.join([item for item in question]), string.join([item for item in answer])))
-                
+                if question is not None and answer is not None:
+                    if self.registryValue('disableANSI'):
+                        irc.reply("{0} :: {1}".format(string.join([item for item in question]), string.join([item for item in answer])))
+                    else:
+                        irc.reply("{0} :: {1}".format(ircutils.mircColor(string.join([item for item in question]), 'red'), string.join([item for item in answer])))
+                else:
+                    irc.reply("For some reason, I could not display using --shortest. Try --fulloutput.")
+                    return
             elif args['fulloutput']: # show everything. no limits.
                 for k, v in sorted(outputlist.items()): # grab all values, sorted via the position number. output one per line.
                     itemout = output.get(v, None) # output contains lists, so we need to join prior to going out.
                     if itemout and itemout is not None:
-                        irc.reply("{0} :: {1}".format(v, "".join(itemout)))
-                        
+                        if self.registryValue('disableANSI'):
+                            irc.reply("{0} :: {1}".format(v, "".join(itemout)))
+                        else:
+                            irc.reply("{0} :: {1}".format(ircutils.mircColor(v, 'red'), "".join(itemout)))
             else: # regular output, dictated by --lines or maxoutput.
                 for q, k in enumerate(sorted(outputlist.keys())):
                     if q < args['maxoutput']:
                         itemout = output.get(outputlist[k], None) # have the key, get the value, use for output.
                         if itemout and itemout is not None:
-                            irc.reply("{0} :: {1}".format(outputlist[k], "".join(itemout)))
-                    
+                            if self.registryValue('disableANSI'):
+                                irc.reply("{0} :: {1}".format(outputlist[k], "".join(itemout)))
+                            else:
+                                irc.reply("{0} :: {1}".format(ircutils.mircColor(outputlist[k], 'red'), "".join(itemout)))
+                                
+            
     wolframalpha = wrap(wolframalpha, [getopts({'num':'int',
                                                 'reinterpret':'',
                                                 'usemetric':'',
