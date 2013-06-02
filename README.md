@@ -13,17 +13,19 @@ Instructions
     It is free. Once getting this key, you will need to set it on your bot before things will work:
 
         /msg bot config plugins.WolframAlpha.apiKey APIKEY
-    
-    - Optional: There are some config variables that can be set for the bot. 
-        
-        /msg bot config search WolframAlpha        
-    
+
+    Now, you must reload the plugin. /msg bot reload WolframAlpha . The plugin should work now.
+
+    - Optional: There are some config variables that can be set for the bot.
+
+        /msg bot config search WolframAlpha
+
     - Optional: I also suggest you make some aliases via the Alias plugin to make life easier. The main command is: wolframalpha.
-    
+
         /msg bot Alias add wa wolframalpha
         /msg bot Alias add wolfram wolframalpha
         /msg bot Alias add alpha wolframalpha
- 
+
 Commands
 
     * wolframalpha <input>
