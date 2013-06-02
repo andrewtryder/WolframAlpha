@@ -10,13 +10,12 @@ Purpose
 Instructions
 
     First, you will need to fetch an API key for WA at http://products.wolframalpha.com/developers/
-    It is free. Once getting this key, you will need to set it on your bot before things will work:
+    It is free. Once getting this key, you will need to set it on your bot before things will work.
+    Reload once you perform this operation to start using it.
 
         /msg bot config plugins.WolframAlpha.apiKey APIKEY
 
-    Now, you must reload the plugin. /msg bot reload WolframAlpha . The plugin should work now.
-
-    - Optional: There are some config variables that can be set for the bot.
+    - Optional: There are some config variables that can be set for the bot. They mainly control output stuff.
 
         /msg bot config search WolframAlpha
 
