@@ -152,7 +152,7 @@ class WolframAlpha(callbacks.Plugin):
         if args['shortest']:  # just show the question and answer.
             # outputlist has pod titles, ordered by importance, not every input has a clear Input/Result (question/answer).
             outputlist = [outputlist[item] for item in sorted(outputlist.keys())]
-            question = output.get(outputlist[0])  # get first (question)
+            question = output.get(outputlist[0])  # get first (question).
             answer = output.get(outputlist[1])  # get second (answer)
             # output time. display with color or not?
             if self.registryValue('disableANSI'):
