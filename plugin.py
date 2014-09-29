@@ -153,7 +153,7 @@ class WolframAlpha(callbacks.Plugin):
             # outputlist has pod titles, ordered by importance, not every input has a clear Input/Result (question/answer).
             outputlist = [outputlist[item] for item in sorted(outputlist.keys())]
             question = output.get(outputlist[0])  # get first (question).
-            answer = output.get(outputlist[1])  # get second (answer)
+            answer = output.get(outputlist[1])  # get second (answer).
             # output time. display with color or not?
             if self.registryValue('disableANSI'):
                 irc.reply("{0} :: {1}".format("".join([i for i in question]), "".join([i for i in answer])))
