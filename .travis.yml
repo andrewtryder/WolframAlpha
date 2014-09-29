@@ -16,7 +16,5 @@ script:
   - supybot-test --plugins-dir=. --no-network $DISABLED_PLUGINS
 notifications:
     email: false
-    webhooks:
-      - http://n.tkte.ch/h/3422/5PUM81evOzddhHv6RL0qCSrL
 matrix:
     fast_finish: true
