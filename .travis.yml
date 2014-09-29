@@ -16,5 +16,6 @@ script:
   - supybot-test --plugins-dir=. --no-network $DISABLED_PLUGINS
 notifications:
     email: false
+    irc: "irc.efnet.net#supybot"
 matrix:
     fast_finish: true
