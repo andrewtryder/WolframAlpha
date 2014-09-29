@@ -74,7 +74,7 @@ class WolframAlpha(callbacks.Plugin):
         args = { 'maxoutput': self.registryValue('maxOutput'),
                  'shortest':None,
                  'fulloutput':None }
-        # handle getopts (optlist).
+        # handle getopts (optlist)
         if optlist:
             for (key, value) in optlist:
                 if key == 'shortest':
