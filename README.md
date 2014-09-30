@@ -31,4 +31,5 @@ Instructions
 
 Commands
 
-    * wolframalpha <query>
+    * wolframalpha <query/question>
+    * wolframalpha 2+2
