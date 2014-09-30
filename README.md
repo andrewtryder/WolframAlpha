@@ -31,4 +31,4 @@ Instructions
 
 Commands
 
-    * wolframalpha <input>
+    * wolframalpha <query>
