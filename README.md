@@ -1,3 +1,7 @@
+Introduction
+
+    Supybot / Limnoria plugin for WolframAlpha 2.0 API.
+
 Purpose
 
     There are at least 3 plugins floating around for WA. One of the big differences with each variant from users
