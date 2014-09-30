@@ -41,7 +41,7 @@ class WolframAlpha(callbacks.Plugin):
     # PUBLIC FUNCTIONS #
     ####################
 
-    # http://products.wolframalpha.com/api/documentation.html
+    # API Documentation. http://products.wolframalpha.com/api/documentation.html
     def wolframalpha(self, irc, msg, args, optlist, optinput):
         """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>
 
