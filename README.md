@@ -33,3 +33,4 @@ Commands
 
     * wolframalpha <query/question>
     * wolframalpha 2+2
+    * wolframalpha 25USD to EUR
