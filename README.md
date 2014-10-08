@@ -1,3 +1,5 @@
+<a href='https://travis-ci.org/sebdah/git-pylint-commit-hook'><img src='https://secure.travis-ci.org/reticulatingspline/Supybot-WolframAlpha.png?branch=master'></a>
+
 Introduction
 
     Supybot / Limnoria plugin for WolframAlpha 2.0 API.
