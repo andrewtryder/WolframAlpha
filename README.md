@@ -1,4 +1,4 @@
-<a href='https://travis-ci.org/sebdah/git-pylint-commit-hook'><img src='https://secure.travis-ci.org/reticulatingspline/Supybot-WolframAlpha.png?branch=master'></a>
+[![Build Status](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha.svg?branch=master)](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha)
 
 Introduction
 
