@@ -16,6 +16,11 @@ script:
   - supybot-test --plugins-dir=. --no-network $DISABLED_PLUGINS
 notifications:
     email: false
-    irc: "irc.efnet.net#supybot"
+    irc:
+      channels:
+        - "irc.efnet.net#supybot"
+#     template:
+#       - "%{repository} (%{commit}) : %{message} %{foo} "
+#       - "Build details: %{build_url}"
 matrix:
     fast_finish: true
