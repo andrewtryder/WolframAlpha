@@ -4,12 +4,12 @@
 
 ## Purpose
 
-    There are at least 3 plugins floating around for WA. One of the big differences with each variant from users
-    is the differences in output due to the verbosity from how WA answers questions. Some answers can be
-    10+ lines and easily flood a channel, either having the bot flood off or getting it banned from a channel.
-    WA's API also has some input options that can be handy, along with some verbose "error" messages that can help
-    the user, which the other plugins do not utilize. I wanted to use the getopts power and make some configuration
-    options to display the data in a more friendly manner.
+There are at least 3 plugins floating around for WA. One of the big differences with each variant from users
+is the differences in output due to the verbosity from how WA answers questions. Some answers can be
+10+ lines and easily flood a channel, either having the bot flood off or getting it banned from a channel.
+WA's API also has some input options that can be handy, along with some verbose "error" messages that can help
+the user, which the other plugins do not utilize. I wanted to use the getopts power and make some configuration
+options to display the data in a more friendly manner.
 
 ## Instructions
 
@@ -41,9 +41,7 @@
     All of my plugins are free and opensource. When I first started out, one of the main reasons I was
     able to learn was due to other code out there. If you find a bug or would like an improvement, feel
     free to give me a message on IRC or fork and submit a pull request. Many hours do go into each plugin,
-    so, if you're feeling generous, I do accept donations via Amazon.
-    
-    Many hours go into coding all of my plugins. I'm always looking for future work, so if you are in need
-    of a custom feature or plugin, contact me via GitHub or IRC.
+    so, if you're feeling generous, I do accept donations via Amazon. I'm always looking for future work,
+    so if you are in need of a custom feature or plugin, contact me via GitHub or IRC.
     
     
