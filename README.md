@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha.svg?branch=master)](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha)
 
-# Limnoria plugin for WolframAlpha.
+# Limnoria plugin for WolframAlpha
 
 ## Introduction
 
@@ -13,14 +13,29 @@ options to display the data in a more friendly manner.
 
 ## Install
 
-You will need a working Limnoria bot on Python 2.7+ for this to work. No additional
-modules are needed from the stock ones.
+You will need a working Limnoria bot on Python 2.7+ for this to work.
+
+Go into your Limnoria plugin dir, usually ~/supybot/plugins and run:
+
+> git pull https://github.com/reticulatingspline/WolframAlpha
+
+To install additional requirements, run:
+
+> pip -r requirements.txt 
+
+Next, load the plugin:
+
+> /msg bot load WolframAlpha
 
 Fetch an API key for WA at http://products.wolframalpha.com/developers/
 It is free. Once getting this key, you will need to set it on your bot before things will work.
 Reload once you perform this operation to start using it.
 
 > /msg bot config plugins.WolframAlpha.apiKey APIKEY
+
+Now, reload the bot and you should be good to go:
+
+> /msg bot reload WolframAlpha
 
 Optional: There are some config variables that can be set for the bot. They mainly control output stuff.
 
