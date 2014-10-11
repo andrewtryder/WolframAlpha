@@ -33,7 +33,7 @@ Next, load the plugin:
 /msg bot load WolframAlpha
 ```
 
-Fetch an API key for WA at http://products.wolframalpha.com/developers/
+[Fetch an API key for WA](http://products.wolframalpha.com/developers/)
 It is free. Once getting this key, you will need to set it on your bot before things will work.
 Reload once you perform this operation to start using it.
 
