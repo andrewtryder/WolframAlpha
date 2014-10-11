@@ -13,7 +13,7 @@ options to display the data in a more friendly manner.
 
 ## Install
 
-You will need a working Limnoria bot on Python 2.7+ for this to work.
+You will need a working Limnoria bot on Python 2.7 for this to work.
 
 Go into your Limnoria plugin dir, usually ~/supybot/plugins and run:
 
@@ -21,7 +21,7 @@ Go into your Limnoria plugin dir, usually ~/supybot/plugins and run:
 
 To install additional requirements, run:
 
-> pip -r requirements.txt 
+> pip install -r requirements.txt 
 
 Next, load the plugin:
 
@@ -41,12 +41,6 @@ Optional: There are some config variables that can be set for the bot. They main
 
 > /msg bot config search WolframAlpha
 
-Optional: I also suggest you make some aliases via the Alias plugin to make life easier. The main command is: wolframalpha.
-
-> /msg bot Alias add wa wolframalpha
-> /msg bot Alias add wolfram wolframalpha
-> /msg bot Alias add alpha wolframalpha
-
 ## Example Usage
 
 - wolframalpha <query/question>
@@ -56,8 +50,8 @@ Optional: I also suggest you make some aliases via the Alias plugin to make life
 
 ## About
 
-All of my plugins are free and opensource. When I first started out, one of the main reasons I was
+All of my plugins are free and open source. When I first started out, one of the main reasons I was
 able to learn was due to other code out there. If you find a bug or would like an improvement, feel
 free to give me a message on IRC or fork and submit a pull request. Many hours do go into each plugin,
-so, if you're feeling generous, I do accept donations via Amazon. I'm always looking for future work,
-so if you are in need of a custom feature or plugin, contact me via GitHub or IRC.
+so, if you're feeling generous, I do accept donations via Amazon or browse my [[wish list](http://amzn.com/w/380JKXY7P5IKE)]
+I'm always looking for future work, so if you are in need of a custom feature or plugin, contact me via GitHub or IRC.
