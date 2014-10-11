@@ -57,16 +57,18 @@ Optional: There are some config variables that can be set for the bot. They main
 
 ```
 <spline> @wolframalpha
-<bot>(wolframalpha [--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>) -- Returns answer from Wolfram Alpha API based on input. Use --num number to display
-a specific amount of lines. Use --reinterpret to have WA logic to interpret question if not understood. Use --usemetric to not display in imperial units. Use
- --shortest for the shortest output (ignores lines). Use --fulloutput to display (1 more message)
+<myybot> (wolframalpha [--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>)
+         -- Returns answer from Wolfram Alpha API based on input. Use --num number to display
+         a specific amount of lines. Use --reinterpret to have WA logic to interpret question
+         if not understood. Use --usemetric to not display in imperial units. Use --shortest
+         for the shortest output (ignores lines). Use --fulloutput to display (1 more message)
 <spline> @wolframalpha 2+2
-<lvsnn> Input :: 2+2
-<@lvsnn> Result :: 4
-<@lvsnn> Number name :: four
-<@lvsnn> Manipulatives illustration ::  | + |  |  =  |  2 |  | 2 |  | 4
+<myybot> Input :: 2+2
+<myybot> Result :: 4
+<myybot> Number name :: four
+<myybot> Manipulatives illustration ::  | + |  |  =  |  2 |  | 2 |  | 4
 <spline> @wolframalpha --shortest 2+2
-<@lvsnn> 2+2 :: 4
+<myybot> 2+2 :: 4
 ```
 
 ## About
