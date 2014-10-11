@@ -56,12 +56,6 @@ Optional: There are some config variables that can be set for the bot. They main
 ## Example Usage
 
 ```
-<spline> @wolframalpha
-<myybot> (wolframalpha [--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>)
-         -- Returns answer from Wolfram Alpha API based on input. Use --num number to display
-         a specific amount of lines. Use --reinterpret to have WA logic to interpret question
-         if not understood. Use --usemetric to not display in imperial units. Use --shortest
-         for the shortest output (ignores lines). Use --fulloutput to display (1 more message)
 <spline> @wolframalpha 2+2
 <myybot> Input :: 2+2
 <myybot> Result :: 4
