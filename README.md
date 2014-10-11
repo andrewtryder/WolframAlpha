@@ -53,5 +53,6 @@ Optional: There are some config variables that can be set for the bot. They main
 All of my plugins are free and open source. When I first started out, one of the main reasons I was
 able to learn was due to other code out there. If you find a bug or would like an improvement, feel
 free to give me a message on IRC or fork and submit a pull request. Many hours do go into each plugin,
-so, if you're feeling generous, I do accept donations via Amazon or browse my [[wish list](http://amzn.com/w/380JKXY7P5IKE)]
-I'm always looking for future work, so if you are in need of a custom feature or plugin, contact me via GitHub or IRC.
+so, if you're feeling generous, I do accept donations via Amazon or browse my [wish list(http://amzn.com/w/380JKXY7P5IKE)].
+
+I'm always looking for work, so if you are in need of a custom feature, plugin or something bigger, contact me via GitHub or IRC.
