@@ -17,36 +17,57 @@ You will need a working Limnoria bot on Python 2.7 for this to work.
 
 Go into your Limnoria plugin dir, usually ~/supybot/plugins and run:
 
-> git pull https://github.com/reticulatingspline/WolframAlpha
+```
+git pull https://github.com/reticulatingspline/WolframAlpha
+```
 
 To install additional requirements, run:
 
-> pip install -r requirements.txt 
+```
+pip install -r requirements.txt 
+```
 
 Next, load the plugin:
 
-> /msg bot load WolframAlpha
+```
+/msg bot load WolframAlpha
+```
 
 Fetch an API key for WA at http://products.wolframalpha.com/developers/
 It is free. Once getting this key, you will need to set it on your bot before things will work.
 Reload once you perform this operation to start using it.
 
-> /msg bot config plugins.WolframAlpha.apiKey APIKEY
+```
+/msg bot config plugins.WolframAlpha.apiKey APIKEY
+```
 
 Now, reload the bot and you should be good to go:
 
-> /msg bot reload WolframAlpha
+```
+/msg bot reload WolframAlpha
+```
 
 Optional: There are some config variables that can be set for the bot. They mainly control output stuff.
 
-> /msg bot config search WolframAlpha
+```
+/msg bot config search WolframAlpha
+```
 
 ## Example Usage
 
-- wolframalpha <query/question>
-- wolframalpha 2+2
-- wolframalpha 25USD to EUR
-- wolframalpha meaning of life
+```
+<spline> @wolframalpha
+<bot>(wolframalpha [--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>) -- Returns answer from Wolfram Alpha API based on input. Use --num number to display
+a specific amount of lines. Use --reinterpret to have WA logic to interpret question if not understood. Use --usemetric to not display in imperial units. Use
+ --shortest for the shortest output (ignores lines). Use --fulloutput to display (1 more message)
+<spline> @wolframalpha 2+2
+<lvsnn> Input :: 2+2
+<@lvsnn> Result :: 4
+<@lvsnn> Number name :: four
+<@lvsnn> Manipulatives illustration ::  | + |  |  =  |  2 |  | 2 |  | 4
+<spline> @wolframalpha --shortest 2+2
+<@lvsnn> 2+2 :: 4
+```
 
 ## About
 
