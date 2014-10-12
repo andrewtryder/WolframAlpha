@@ -5,13 +5,18 @@
 #
 ###
 
+import os
 from supybot.test import *
+
 
 class WolframAlphaTestCase(PluginTestCase):
     plugins = ('WolframAlpha',)
+    
+    def setUp(self):
+        apiKey = os.environ.get('apiKey')
+        conf.supybot.plugins.WolframAlpha.apiKey.setValue(apiKey)
 
     def testWolframAlpha(self):
-        conf.supybot.plugins.WolframAlpha.apiKey.setValue('VV6W6X-R7389R5AU5')
         conf.supybot.plugins.WolframAlpha.disableANSI.setValue('True')
         self.assertResponse('wolframalpha --shortest 2+2', '2+2 :: 4')
 
