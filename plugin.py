@@ -47,7 +47,7 @@ class WolframAlpha(callbacks.Plugin):
 
     # API Documentation. http://products.wolframalpha.com/api/documentation.html
     def wolframalpha(self, irc, msg, args, optlist, optinput):
-        """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <input>
+        """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <query>
 
         Returns answer from Wolfram Alpha API based on input.
 
