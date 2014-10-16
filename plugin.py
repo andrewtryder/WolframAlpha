@@ -95,7 +95,7 @@ class WolframAlpha(callbacks.Plugin):
         url = 'http://api.wolframalpha.com/v2/query?' + utils.web.urlencode(urlArgs)
         try:
             page = utils.web.getUrl(url)
-        except utils.web.Error as e:
+        except Exception as e:
             self.log.error("ERROR opening {0} message: {1}".format(url, e))
             irc.reply("ERROR: Failed to open WolframAlpha API: {0}".format(url))
             return
