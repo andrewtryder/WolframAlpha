@@ -49,7 +49,7 @@ class WolframAlpha(callbacks.Plugin):
     def wolframalpha(self, irc, msg, args, optlist, optinput):
         """[--num #|--reinterpret|--usemetric|--shortest|--fulloutput] <query>
 
-        Returns answer from Wolfram Alpha API based on input.
+        Returns answer from Wolfram Alpha API.
 
         Use --num number to display a specific amount of lines.
         Use --reinterpret to have WA logic to interpret question if not understood.
