@@ -17,9 +17,13 @@ from supybot.commands import *
 import supybot.plugins as plugins
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
-from supybot.i18n import PluginInternationalization, internationalizeDocstring
-
-_ = PluginInternationalization('WolframAlpha')
+try:
+    from supybot.i18n import PluginInternationalization
+    _ = PluginInternationalization('WolframAlpha')
+except:
+    # Placeholder that allows to run the plugin on a bot
+    # without the i18n module
+    _ = lambda x:x
 
 @internationalizeDocstring
 class WolframAlpha(callbacks.Plugin):
