@@ -25,7 +25,6 @@ except:
     # without the i18n module
     _ = lambda x:x
 
-@internationalizeDocstring
 class WolframAlpha(callbacks.Plugin):
     """Add the help for "@plugin help WolframAlpha" here
     This should describe *how* to use this plugin."""
