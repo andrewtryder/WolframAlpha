@@ -1,7 +1,8 @@
 language: python
 python:
   - "2.7"
-  - pypy
+  - "3.4"
+  - "pypy"
 # command to install dependencies, 
 install:
     - pip install -vr requirements.txt||true
@@ -10,9 +11,8 @@ script:
   - echo $TRAVIS_PYTHON_VERSION
   - cd .. && supybot-test WolframAlpha
 notifications:
-    email: false
-    irc:
-      channels:
-        - "irc.efnet.net#supybot"
+  email: false
+  irc: "irc.efnet.net#supybot"
+  webhooks: http://n.tkte.ch/h/3527/rm2ycnsYzBtH8Qqg2AAmqjTM
 matrix:
-    fast_finish: true
+  fast_finish: true
