@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha.svg?branch=master)](https://travis-ci.org/reticulatingspline/Supybot-WolframAlpha)
+[![Build Status](https://travis-ci.org/reticulatingspline/WolframAlpha.svg?branch=master)](https://travis-ci.org/reticulatingspline/WolframAlpha)
 
 # Limnoria plugin for WolframAlpha
 
